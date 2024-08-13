@@ -1,1 +1,3 @@
 Descriptions of commits :
+
+2cb2b0b8f450724fba279ed5ea923b6ba7a3f1df: In this commit we tried to create a method by using the behaviour parameterization strategy which means to take multiple behaviours according to the parameters passed. This is also a startegy design pattern. Strategy design pattern lets you define a family of algorithms,encapsulate each algorithm (called a strategy), and select an algorithm at run-time which is what we just did by parameterising the filter method appropriately. Now at runtime we can change the startegy and call any strategy according to the need of the client.
