@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.utk.model.Apple;
 import com.utk.service.AppleComparator;
+import static java.util.Comparator.comparing;
 
 public class Chapter3 {
 	
@@ -32,15 +33,18 @@ public class Chapter3 {
 		//apples.sort(new AppleComparator());
 		
 		//Step 2 for behaviour sorting using anonymous classes
-		apples.sort(new Comparator<Apple>() {
-
-			@Override
-			public int compare(Apple o1, Apple o2) {
-				if(o1.getWeight()>o2.getWeight())
-					return 0;
-				return -1;
-			}
-		});
+//		apples.sort(new Comparator<Apple>() {
+//
+//			@Override
+//			public int compare(Apple o1, Apple o2) {
+//				if(o1.getWeight()>o2.getWeight())
+//					return 0;
+//				return -1;
+//			}
+//		});
+		
+		//Step 3 for behaviour sorting using lambda expressions
+		apples.sort(comparing((a)->a.getWeight()));
 		System.out.println(apples.toString());
 	}
 
