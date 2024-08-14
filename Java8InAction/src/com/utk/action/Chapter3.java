@@ -14,8 +14,8 @@ public class Chapter3 {
 		
 		Apple apple1 = new Apple("Green", 130);
 		Apple apple2 = new Apple("Red", 40);
-		Apple apple3 = new Apple("Blue", 50);
-		Apple apple4 = new Apple("Green", 160);
+		Apple apple3 = new Apple("Blue", 40);
+		Apple apple4 = new Apple("Green", 40);
 		Apple apple5 = new Apple("Red", 70);
 		Apple apple6 = new Apple("Blue", 80);
 		Apple apple7 = new Apple("Green", 190);
@@ -47,7 +47,12 @@ public class Chapter3 {
 //		apples.sort(comparing((a)->a.getWeight()));
 		
 		//Step 4 for behaviour sorting using method references
-		apples.sort(comparing(Apple::getWeight));
+//		apples.sort(comparing(Apple::getWeight));
+		
+		//Step 5 for behaviour sorting using reverse and combining multiple checks
+		apples.sort(comparing(Apple::getWeight)
+				.reversed()
+				.thenComparing(Apple::getColor));
 		System.out.println(apples.toString());
 	}
 
