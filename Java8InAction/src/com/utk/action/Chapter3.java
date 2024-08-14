@@ -44,7 +44,10 @@ public class Chapter3 {
 //		});
 		
 		//Step 3 for behaviour sorting using lambda expressions
-		apples.sort(comparing((a)->a.getWeight()));
+//		apples.sort(comparing((a)->a.getWeight()));
+		
+		//Step 4 for behaviour sorting using method references
+		apples.sort(comparing(Apple::getWeight));
 		System.out.println(apples.toString());
 	}
 
