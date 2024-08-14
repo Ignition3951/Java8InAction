@@ -1,6 +1,7 @@
 package com.utk.action;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.utk.model.Apple;
@@ -28,7 +29,18 @@ public class Chapter3 {
 		apples.add(apple7);
 		apples.add(apple8);
 		//Step 1 for behaviour sorting
-		apples.sort(new AppleComparator());
+		//apples.sort(new AppleComparator());
+		
+		//Step 2 for behaviour sorting using anonymous classes
+		apples.sort(new Comparator<Apple>() {
+
+			@Override
+			public int compare(Apple o1, Apple o2) {
+				if(o1.getWeight()>o2.getWeight())
+					return 0;
+				return -1;
+			}
+		});
 		System.out.println(apples.toString());
 	}
 
