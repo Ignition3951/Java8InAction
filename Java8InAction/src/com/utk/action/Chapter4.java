@@ -22,8 +22,14 @@ public class Chapter4 {
 		 
 		 List<String> threeHighCaloricDishNames = 
 				 menu.stream()
-				 .filter(d-> d.getCalories()>300)
-				 .map(Dish::getName)
+				 .filter(d-> {
+					 System.out.println("filtering calories: "+d.getCalories());
+					 return d.getCalories()>300;
+				 })
+				 .map(d -> {
+					 System.out.println("mapping names: "+d.getName());
+					 return d.getName();
+				 })
 				 .limit(3)
 				 .collect(toList());
 		 
