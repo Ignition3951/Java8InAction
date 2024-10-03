@@ -2,6 +2,8 @@ package com.utk.action;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 import static java.util.stream.Collectors.toList;
 
 public class Chapter5 {
@@ -20,6 +22,10 @@ public class Chapter5 {
 		for(int i=0;i<mapped12.size();i++) {
 				System.out.println("("+mapped12.get(i)[0]+","+mapped12.get(i)[1]+")");
 		}
+		
+		//Introduction of reduce function in  java8
+		Optional<Integer> sum = numbers1.stream().reduce((a,b)-> a+b);
+		System.out.println(sum);
 
 	}
 
