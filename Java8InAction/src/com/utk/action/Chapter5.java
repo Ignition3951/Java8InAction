@@ -3,6 +3,8 @@ package com.utk.action;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import com.utk.model.Trader;
 import com.utk.model.Transaction;
@@ -108,7 +110,17 @@ public class Chapter5 {
 		if (minTransactionByUsingFunction.isPresent()) {
 			System.out.println("reduce minTransactionByUsingFunction : " + minTransactionByUsingFunction.get());
 		}
-
+		
+		//Pythogorean triples
+		Stream<double[]> pythagoreanTriplets= IntStream.rangeClosed(1, 100).boxed()
+		.flatMap(a->
+				IntStream.rangeClosed(a, 100)
+				.mapToObj(b->new double[] {a,b,Math.sqrt(a*a+b*b)})
+				.filter(thirdelement-> thirdelement[2]%1==0));
+		
+		pythagoreanTriplets.limit(5)
+		.forEach(t->System.out.println("("+t[0]+","+t[1]+","+t[2]+")"));
+		
 	}
 
 }
