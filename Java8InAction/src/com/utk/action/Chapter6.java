@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.*;
 
@@ -48,11 +49,27 @@ public class Chapter6 {
 					else return CalorieLevel.FAT;
 				})));
 		System.out.println("groupByDishTypeAndCalorieLevel : " + groupByDishTypeAndCalorieLevel);
+		
+		//Partitioning in streams
+		int primeRange=10;
+		Map<Boolean, List<Integer>> partitionPrimes=
+				IntStream.rangeClosed(2, primeRange).boxed()
+				.collect(partitioningBy(candidate->isPrime(candidate)));
+		
+		System.out.println("partitionPrimes : " + partitionPrimes);
 
 	}
 
 	public enum CalorieLevel {
 		DIET, NORMAL, FAT
+	}
+	
+	public static boolean isPrime(int candidate) {
+		int candidateRoot = (int) Math.sqrt((double)candidate);
+		return IntStream.rangeClosed(2, candidateRoot)
+				.noneMatch(i-> {
+					return candidate%i==0;
+				});
 	}
 
 }
