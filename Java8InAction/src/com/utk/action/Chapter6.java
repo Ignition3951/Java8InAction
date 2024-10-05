@@ -39,6 +39,15 @@ public class Chapter6 {
 					else return CalorieLevel.FAT;
 				}));
 		System.out.println("groupByDietLevel : " + groupByDietLevel);
+		
+		//Multilevel grouping
+		Map<Dish.Type, Map<CalorieLevel, List<Dish>>> groupByDishTypeAndCalorieLevel=
+				menu.stream().collect(groupingBy(Dish::getType,groupingBy(calorie->{
+					if(calorie.getCalories()<=400) return CalorieLevel.DIET;
+					else if(calorie.getCalories()<=700) return CalorieLevel.NORMAL;
+					else return CalorieLevel.FAT;
+				})));
+		System.out.println("groupByDishTypeAndCalorieLevel : " + groupByDishTypeAndCalorieLevel);
 
 	}
 
