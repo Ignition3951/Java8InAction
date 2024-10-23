@@ -1,10 +1,13 @@
 package com.utk.action;
 
+import java.util.Spliterator;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.utk.model.WordCounter;
+import com.utk.model.WordCounterSpliterator;
 import com.utk.util.Utility;
 
 public class Chapter7 {
@@ -24,7 +27,13 @@ public class Chapter7 {
 		Stream<Character> stream = IntStream.range(0, SENTENCE.length())
 				.mapToObj(SENTENCE::charAt);
 		
-		System.out.println("Words found through countWords() are :"+countWords(stream));
+		System.out.println("Words found through countWords() in parallel without using spliterator are :"+countWords(stream.parallel()));
+		
+		Spliterator<Character> spliterator = new WordCounterSpliterator(SENTENCE);
+		
+		Stream<Character> streamParallel = StreamSupport.stream(spliterator, true);
+		
+		System.out.println("Words found through countWords() with spliterator are :"+countWords(streamParallel));
 
 	}
 	
