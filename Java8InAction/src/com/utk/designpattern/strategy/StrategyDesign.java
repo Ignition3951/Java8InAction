@@ -3,7 +3,7 @@ package com.utk.designpattern.strategy;
 /**
  * @author UTKARSH
  * You can add any regex match strategy on the string in lambda function
- * i.e the stretegy for checking the validations is dependant on you
+ * i.e the strategy for checking the validations is dependant on your arguments in the lambda function
  */
 public class StrategyDesign {
 
