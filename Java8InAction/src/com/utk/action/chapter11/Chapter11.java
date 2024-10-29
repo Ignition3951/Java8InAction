@@ -24,10 +24,8 @@ public class Chapter11 {
 		System.out.println("Price returned after :" + retrievalTime + " msec!!!");
 
 		long startTimeFindPrices = System.nanoTime();
-		List<String> output = ShopService.findPrices("My Favorite Product");
-		for (String eachOutput : output) {
-			System.out.println(eachOutput);
-		}
+		List<String> output = ShopService.findPricesUsingCompletableFuture("My Favorite Product");
+		System.out.println(output.toString());
 		long executionTime = ShopService.getTimeDuration(startTimeFindPrices);
 		System.out.println("Got done in :" + executionTime + " msec!!!");
 	}
