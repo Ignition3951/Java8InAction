@@ -2,6 +2,7 @@ package com.utk.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -11,6 +12,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
+import com.utk.model.Discount;
+import com.utk.model.Quote;
 import com.utk.model.Shop;
 
 public interface ShopService {
@@ -18,7 +21,8 @@ public interface ShopService {
 	String productName = "My Favorite Product";
 
 	List<Shop> shops = Arrays.asList(new Shop("BestPrice", productName), new Shop("LetsSaveBig", productName),
-			new Shop("MyFavoriteShop", productName), new Shop("BuyItAll", productName),new Shop("TakeItAll", productName));
+			new Shop("MyFavoriteShop", productName), new Shop("BuyItAll", productName),
+			new Shop("TakeItAll", productName));
 
 	final Executor executor = Executors.newFixedThreadPool(Math.min(shops.size(), 100), new ThreadFactory() {
 
@@ -84,6 +88,21 @@ public interface ShopService {
 						.supplyAsync(() -> shop.getName() + " price is " + getPrice(product), executor))
 				.collect(Collectors.toList());
 		return futurePrices.stream().map(CompletableFuture::join).collect(toList());
+	}
+
+	public static String getPriceString(String product, String shopName) {
+		double price = calculatePrice(product);
+		Random random = new Random();
+		Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+		return String.format("%s:%.2f:%s", shopName, price, code);
+	}
+
+	public static List<String> findDiscountedPricesUsingStream(String product) {
+		List<String> discountedPrices = shops.stream()
+				.map((shop) -> getPriceString(shop.getProductName(), shop.getName())).map(Quote::parse)
+				.map(Discount::applyDiscount).collect(toList());
+		return discountedPrices;
+
 	}
 
 }
