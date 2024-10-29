@@ -115,8 +115,10 @@ public interface ShopService {
 		List<CompletableFuture<String>> futurePrices = shops.stream()
 				.map(shop -> CompletableFuture
 						.supplyAsync(() -> getPriceString(shop.getProductName(), shop.getName()), executor))
-				.map(future -> future.thenApply(Quote::parse))
-				.map(future -> future.thenCompose(
+				.map(future -> future.thenApply(Quote::parse)) // thenApply means whenever the async processes complete
+																// their result will be mapped to parse function
+				.map(future -> future.thenCompose( // thenCompose means the output of the first async will be passed as
+													// the input to the other async method
 						quote -> CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)))
 				.collect(Collectors.toList());
 		return futurePrices.stream().map(CompletableFuture::join).collect(toList());
