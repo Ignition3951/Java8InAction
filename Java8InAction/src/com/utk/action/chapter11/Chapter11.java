@@ -30,7 +30,7 @@ public class Chapter11 {
 		System.out.println("Got done in :" + executionTime + " msec!!!");
 		
 		long startTimeFindDiscountedPrices = System.nanoTime();
-		List<String> discountedPricesStream = ShopService.findDiscountedPricesUsingStream("My Favorite Product");
+		List<String> discountedPricesStream = ShopService.findDiscountedPricesUsingCompletableFutureAsync("My Favorite Product");
 		System.out.println(discountedPricesStream.toString());
 		long executionTimeDiscountedPrices = ShopService.getTimeDuration(startTimeFindDiscountedPrices);
 		System.out.println("Got done in :" + executionTimeDiscountedPrices + " msec!!!");

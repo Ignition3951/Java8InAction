@@ -105,4 +105,21 @@ public interface ShopService {
 
 	}
 
+	// There are two services used which are producing a delay of 1 second each
+	// hence the services are called separately using async
+	// methods in order to free the threads to do some other work during the third
+	// party async work is getting done
+	// the two methods are getPriceString and applyDiscount both can be considered
+	// as third party processes taking some time to execute.
+	public static List<String> findDiscountedPricesUsingCompletableFutureAsync(String product) {
+		List<CompletableFuture<String>> futurePrices = shops.stream()
+				.map(shop -> CompletableFuture
+						.supplyAsync(() -> getPriceString(shop.getProductName(), shop.getName()), executor))
+				.map(future -> future.thenApply(Quote::parse))
+				.map(future -> future.thenCompose(
+						quote -> CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)))
+				.collect(Collectors.toList());
+		return futurePrices.stream().map(CompletableFuture::join).collect(toList());
+	}
+
 }
