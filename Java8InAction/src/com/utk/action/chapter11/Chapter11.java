@@ -1,6 +1,7 @@
 package com.utk.action.chapter11;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import com.utk.service.ShopService;
@@ -28,12 +29,23 @@ public class Chapter11 {
 		System.out.println(output.toString());
 		long executionTime = ShopService.getTimeDuration(startTimeFindPrices);
 		System.out.println("Got done in :" + executionTime + " msec!!!");
-		
+
 		long startTimeFindDiscountedPrices = System.nanoTime();
-		List<String> discountedPricesStream = ShopService.findDiscountedPricesUsingCompletableFutureAsync("My Favorite Product");
+		List<String> discountedPricesStream = ShopService
+				.findDiscountedPricesUsingCompletableFutureAsync("My Favorite Product");
 		System.out.println(discountedPricesStream.toString());
 		long executionTimeDiscountedPrices = ShopService.getTimeDuration(startTimeFindDiscountedPrices);
 		System.out.println("Got done in :" + executionTimeDiscountedPrices + " msec!!!");
+
+		long startTimeForRandomDelay = System.nanoTime();
+		CompletableFuture[] futureList = ShopService.findPricesUsingStreams("Iphone16promax")
+				.map(f -> f.thenAccept(s -> System.out.println(
+						s + " (done in " + ((System.nanoTime() - startTimeForRandomDelay) / 1000000) + " msec)")))
+				.toArray(size -> new CompletableFuture[size]);
+		CompletableFuture.allOf(futureList).join();
+		System.out.println("All shops have now responded in "
+				+ ((System.nanoTime() - startTimeForRandomDelay) / 1000000) + " msecs");
+
 	}
 
 }

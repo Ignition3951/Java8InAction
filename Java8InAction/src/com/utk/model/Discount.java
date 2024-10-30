@@ -19,7 +19,7 @@ public class Discount {
 	}
 
 	public static double apply(double price, Code code) {
-		ShopService.delay();
+		ShopService.randomDelay();;
 		return price * (100 - code.percentage) / 100;
 	}
 

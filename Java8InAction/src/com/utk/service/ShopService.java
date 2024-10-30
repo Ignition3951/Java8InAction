@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static java.util.stream.Collectors.toList;
 
 import com.utk.model.Discount;
@@ -19,6 +21,8 @@ import com.utk.model.Shop;
 public interface ShopService {
 
 	String productName = "My Favorite Product";
+
+	static final Random random = new Random();
 
 	List<Shop> shops = Arrays.asList(new Shop("BestPrice", productName), new Shop("LetsSaveBig", productName),
 			new Shop("MyFavoriteShop", productName), new Shop("BuyItAll", productName),
@@ -42,8 +46,17 @@ public interface ShopService {
 		}
 	}
 
+	public static void randomDelay() {
+		int delay = 500 + random.nextInt(2000);
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static double calculatePrice(String product) {
-		delay();
+		randomDelay();
 		return Math.random() * product.charAt(0) + product.charAt(1);
 	}
 
@@ -122,6 +135,18 @@ public interface ShopService {
 						quote -> CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)))
 				.collect(Collectors.toList());
 		return futurePrices.stream().map(CompletableFuture::join).collect(toList());
+	}
+
+	public static Stream<CompletableFuture<String>> findPricesUsingStreams(String product) {
+		return shops.stream()
+				.map(shop -> CompletableFuture.supplyAsync(() -> getPriceString(shop.getProductName(), shop.getName()),
+						executor))
+				.map(future -> future.thenApply(Quote::parse)) // thenApply means whenever the async processes complete
+																// their result will be mapped to parse function
+				.map(future -> future.thenCompose( // thenCompose means the output of the first async will be passed as
+													// the input to the other async method
+						quote -> CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)));
+
 	}
 
 }
