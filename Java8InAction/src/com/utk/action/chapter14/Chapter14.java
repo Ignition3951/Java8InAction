@@ -2,6 +2,7 @@ package com.utk.action.chapter14;
 
 import com.utk.model.TrainJourney;
 import com.utk.service.EmptyList;
+import com.utk.service.LazyList;
 import com.utk.service.MyLinkedList;
 import com.utk.service.MyList;
 import com.utk.service.TrainJourneyService;
@@ -33,9 +34,21 @@ public class Chapter14 {
 		System.out.println("linkedJourney journey :" + linkedJourney.onward);
 
 		MyList<Integer> l = new MyLinkedList<Integer>(5, new MyLinkedList<>(10, new EmptyList<>()));
-		
-		System.out.println(l.toString());//created normal linked list 
 
+		System.out.println(l.toString());// created normal linked list
+
+		LazyList<Integer> numbers = from(2);// Initialized a lazy list starting from two so the next element is created
+											// as and when required
+		int two = numbers.head();
+		int three = numbers.tail().head();
+		int four = numbers.tail().tail().head();
+
+		System.out.println("Two : " + two + " Three : " + three + " Four : " + four);
+
+	}
+
+	public static LazyList<Integer> from(int n) {
+		return new LazyList<Integer>(n, () -> from(n + 1));
 	}
 
 }
