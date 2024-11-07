@@ -14,4 +14,8 @@ public class TrainJourneyService {
 		t.onward = b;
 		return a;
 	}
+
+	public static TrainJourney appendLink(TrainJourney a, TrainJourney b) {
+		return a == null ? b : new TrainJourney(a.price, appendLink(a.onward, b));
+	}
 }

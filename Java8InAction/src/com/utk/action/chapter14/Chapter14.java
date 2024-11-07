@@ -14,7 +14,14 @@ public class Chapter14 {
 		System.out.println("Second journey before:" + secondJourney.onward);
 		System.out.println("Third journey before:" + thirdJourney.onward);
 
-		TrainJourney linkedJourney = TrainJourneyService.link(firstJourney, thirdJourney);
+//		TrainJourney linkedJourney = TrainJourneyService.link(firstJourney, thirdJourney);
+		TrainJourney linkedJourney = TrainJourneyService.appendLink(firstJourney, thirdJourney);// by using this
+																								// technique a new
+																								// object is returned
+																								// and the already
+																								// existing objects are
+																								// not modified
+																								// destructively
 
 		System.out.println("First journey :" + firstJourney.onward);
 		System.out.println("Second journey :" + secondJourney.onward);
