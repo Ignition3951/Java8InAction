@@ -1,6 +1,9 @@
 package com.utk.action.chapter14;
 
 import com.utk.model.TrainJourney;
+import com.utk.service.EmptyList;
+import com.utk.service.MyLinkedList;
+import com.utk.service.MyList;
 import com.utk.service.TrainJourneyService;
 
 public class Chapter14 {
@@ -28,6 +31,10 @@ public class Chapter14 {
 		System.out.println("Third journey :" + thirdJourney.onward);// Illustrates that the third object is also
 																	// destructively modified by the link method
 		System.out.println("linkedJourney journey :" + linkedJourney.onward);
+
+		MyList<Integer> l = new MyLinkedList<Integer>(5, new MyLinkedList<>(10, new EmptyList<>()));
+		
+		System.out.println(l.toString());//created normal linked list 
 
 	}
 
