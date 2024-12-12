@@ -3,7 +3,9 @@ package com.utk.action.practice;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class IntegerOperations {
 
@@ -35,6 +37,11 @@ public class IntegerOperations {
 		listOfIntegers.stream().sorted().limit(3).forEach(number->System.out.println(number));
 		System.out.println("------------------Maximum three numbers are : -------------------");
 		listOfIntegers.stream().sorted(Comparator.reverseOrder()).limit(3).forEach(number->System.out.println(number));
+		
+		int number = 123456789;
+		
+		Integer sumOfDigits =  Stream.of(String.valueOf(number).split("")).collect(Collectors.summingInt(Integer::parseInt));
+		System.out.println("Sum of digits : "+sumOfDigits);
 
 	}
 
