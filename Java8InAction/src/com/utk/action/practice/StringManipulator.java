@@ -1,5 +1,8 @@
 package com.utk.action.practice;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,6 +21,12 @@ public class StringManipulator {
         }else {
         	System.out.println("Strings are not anagrams!!!!!");
         }
+        
+        List<String> listOfStrings = Arrays.asList("Java", "Python", "C#", "HTML", "Kotlin", "C++", "COBOL", "C");
+        
+        List<String> lengthSortedString =  listOfStrings.stream().sorted(Comparator.comparingInt(x->x.length())).collect(Collectors.toList());
+        
+        System.out.println(lengthSortedString.toString());
 
 	}
 
