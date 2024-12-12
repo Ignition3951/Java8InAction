@@ -46,6 +46,11 @@ public class IntegerOperations {
 		Integer secondLargestNumber = listOfIntegers.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
 		System.out.println("Second largest number is : "+secondLargestNumber);
 		
+		int sum = Arrays.stream(listOfIntegersOne).sum();
+		double average = Arrays.stream(listOfIntegersOne).average().getAsDouble();
+		
+		System.out.println("Sum is : "+sum+". Average is : "+average);
+		
 
 	}
 
