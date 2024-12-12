@@ -30,6 +30,11 @@ public class IntegerOperations {
 		int[] concatListWithoutDuplicates = IntStream.concat(Arrays.stream(listOfIntegersOne), Arrays.stream(listOfIntegersTwo)).sorted().distinct().toArray();
 		
 		System.out.println("Concatenated string without duplicates is : "+Arrays.toString(concatListWithoutDuplicates));
+		
+		System.out.println("------------------Minimum three numbers are : -------------------");
+		listOfIntegers.stream().sorted().limit(3).forEach(number->System.out.println(number));
+		System.out.println("------------------Maximum three numbers are : -------------------");
+		listOfIntegers.stream().sorted(Comparator.reverseOrder()).limit(3).forEach(number->System.out.println(number));
 
 	}
 
