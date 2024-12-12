@@ -42,6 +42,10 @@ public class IntegerOperations {
 		
 		Integer sumOfDigits =  Stream.of(String.valueOf(number).split("")).collect(Collectors.summingInt(Integer::parseInt));
 		System.out.println("Sum of digits : "+sumOfDigits);
+		
+		Integer secondLargestNumber = listOfIntegers.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
+		System.out.println("Second largest number is : "+secondLargestNumber);
+		
 
 	}
 
