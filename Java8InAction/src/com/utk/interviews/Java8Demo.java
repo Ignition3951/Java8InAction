@@ -1,6 +1,5 @@
 package com.utk.interviews;
 
-import javax.xml.stream.events.Characters;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
