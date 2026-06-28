@@ -176,7 +176,19 @@ public class EmployeeDemo {
                 }));
         System.out.println(employeeWithAgeBracket);
 
+        // Group employees by department and get top two salaries in each department
+        Map<String, List<Employee>> topTwoEmployeesInEachDepartment = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> list.stream()
+                                        .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+                                        .limit(2)
+                                        .collect(Collectors.toList())
+                        )
+                ));
 
+        System.out.println(topTwoEmployeesInEachDepartment);
 
     }
 }
